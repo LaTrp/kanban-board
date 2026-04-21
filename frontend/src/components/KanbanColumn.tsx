@@ -9,7 +9,7 @@ import KanbanCard from "./KanbanCard";
 
 interface Props {
   column: ColumnType;
-  onAddCard: (columnId: string, title: string) => void;
+  onAddCard: (columnId: string, title: string, description: string) => void;
   onDeleteCard: (id: string) => void;
   onUpdateCard: (id: string, title: string, description: string) => void;
   onDeleteColumn: (id: string) => void;
@@ -26,6 +26,7 @@ const KanbanColumn: React.FC<Props> = ({
 }) => {
   const [isAddingCard, setIsAddingCard] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState("");
+  const [newCardDesc, setNewCardDesc] = useState("");
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [columnTitle, setColumnTitle] = useState(column.title);
 
@@ -36,8 +37,9 @@ const KanbanColumn: React.FC<Props> = ({
 
   const handleAddCard = () => {
     if (newCardTitle.trim()) {
-      onAddCard(column.id, newCardTitle.trim());
+      onAddCard(column.id, newCardTitle.trim(), newCardDesc.trim());
       setNewCardTitle("");
+      setNewCardDesc("");
       setIsAddingCard(false);
     }
   };
@@ -119,14 +121,29 @@ const KanbanColumn: React.FC<Props> = ({
               value={newCardTitle}
               onChange={(e) => setNewCardTitle(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleAddCard();
+                if (e.key === "Enter" && !e.shiftKey) handleAddCard();
                 if (e.key === "Escape") {
                   setNewCardTitle("");
+                  setNewCardDesc("");
                   setIsAddingCard(false);
                 }
               }}
-              placeholder="Enter card title..."
+              placeholder="Card title..."
               className="w-full bg-slate-700 text-white text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 placeholder-slate-500"
+            />
+            <textarea
+              value={newCardDesc}
+              onChange={(e) => setNewCardDesc(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") {
+                  setNewCardTitle("");
+                  setNewCardDesc("");
+                  setIsAddingCard(false);
+                }
+              }}
+              rows={2}
+              placeholder="Description (optional)..."
+              className="w-full bg-slate-700 text-slate-300 text-xs rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 placeholder-slate-500 resize-none"
             />
             <div className="flex gap-2">
               <button
@@ -138,6 +155,7 @@ const KanbanColumn: React.FC<Props> = ({
               <button
                 onClick={() => {
                   setNewCardTitle("");
+                  setNewCardDesc("");
                   setIsAddingCard(false);
                 }}
                 className="text-slate-400 hover:text-slate-300 text-xs px-2"

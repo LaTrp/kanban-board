@@ -68,8 +68,8 @@ const KanbanBoard: React.FC = () => {
   }, [loadBoard]);
 
   // --- Card CRUD ---
-  const handleAddCard = async (columnId: string, title: string) => {
-    await api.createCard(columnId, title);
+  const handleAddCard = async (columnId: string, title: string, description: string) => {
+    await api.createCard(columnId, title, description);
     loadBoard();
   };
 
