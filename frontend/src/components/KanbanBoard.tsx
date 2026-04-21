@@ -257,7 +257,7 @@ const KanbanBoard: React.FC = () => {
       </header>
 
       {/* Board */}
-      <main className="flex-1 overflow-x-auto p-6">
+      <main className="flex-1 overflow-x-auto p-6 max-w-7xl mx-auto w-full">
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
@@ -265,7 +265,7 @@ const KanbanBoard: React.FC = () => {
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
         >
-          <div className="flex gap-4 items-start h-full">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 items-start h-full">
             {board.columns.map((column) => (
               <KanbanColumn
                 key={column.id}
@@ -280,7 +280,7 @@ const KanbanBoard: React.FC = () => {
 
             {/* Add Column */}
             {addingColumn ? (
-              <div className="bg-slate-800 rounded-xl w-72 flex-shrink-0 p-3 space-y-2">
+              <div className="bg-slate-800 rounded-xl min-w-[220px] p-3 space-y-2">
                 <input
                   autoFocus
                   value={newColumnTitle}
@@ -316,7 +316,7 @@ const KanbanBoard: React.FC = () => {
             ) : (
               <button
                 onClick={() => setAddingColumn(true)}
-                className="bg-slate-800/50 hover:bg-slate-800 border-2 border-dashed border-slate-700 hover:border-slate-600 rounded-xl w-72 flex-shrink-0 p-4 text-slate-500 hover:text-slate-300 transition-colors text-sm font-medium"
+                className="bg-slate-800/50 hover:bg-slate-800 border-2 border-dashed border-slate-700 hover:border-slate-600 rounded-xl min-w-[220px] p-4 text-slate-500 hover:text-slate-300 transition-colors text-sm font-medium"
               >
                 + Add Column
               </button>

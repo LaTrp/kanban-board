@@ -52,7 +52,7 @@ const KanbanColumn: React.FC<Props> = ({
   return (
     <div
       ref={setNodeRef}
-      className="bg-slate-800 rounded-xl w-72 flex-shrink-0 flex flex-col max-h-[calc(100vh-8rem)]"
+      className="bg-slate-800 rounded-xl min-w-[220px] flex flex-col max-h-[calc(100vh-8rem)]"
     >
       {/* Column Header */}
       <div className="p-3 flex items-center justify-between">
