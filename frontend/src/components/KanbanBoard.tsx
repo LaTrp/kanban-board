@@ -9,6 +9,8 @@ import {
   useSensor,
   useSensors,
   closestCenter,
+  pointerWithin,
+  CollisionDetection,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { Board, Card } from "../types";
@@ -17,6 +19,26 @@ import KanbanColumn from "./KanbanColumn";
 import KanbanCard from "./KanbanCard";
 
 const BOARD_ID = "board-1";
+
+// Custom collision detection that filters out the active (dragged) item
+// from results, so a card doesn't collide with its own sortable droppable.
+const kanbanCollisionDetection: CollisionDetection = (args) => {
+  const activeId = args.active.id;
+
+  // First: check what the pointer is inside of
+  const pointerCollisions = pointerWithin(args);
+  // Filter out the active item itself
+  const filtered = pointerCollisions.filter((c) => c.id !== activeId);
+
+  if (filtered.length > 0) {
+    // Prefer column-level droppables when available (for cross-column moves)
+    return [filtered[0]];
+  }
+
+  // Fallback: closestCenter, also filtering out active item
+  const centerCollisions = closestCenter(args);
+  return centerCollisions.filter((c) => c.id !== activeId);
+};
 
 const KanbanBoard: React.FC = () => {
   const [board, setBoard] = useState<Board | null>(null);
@@ -260,7 +282,7 @@ const KanbanBoard: React.FC = () => {
       <main className="flex-1 overflow-x-auto p-6 max-w-7xl mx-auto w-full">
         <DndContext
           sensors={sensors}
-          collisionDetection={closestCenter}
+          collisionDetection={kanbanCollisionDetection}
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
