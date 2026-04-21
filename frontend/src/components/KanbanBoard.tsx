@@ -68,7 +68,11 @@ const KanbanBoard: React.FC = () => {
   }, [loadBoard]);
 
   // --- Card CRUD ---
-  const handleAddCard = async (columnId: string, title: string, description: string) => {
+  const handleAddCard = async (
+    columnId: string,
+    title: string,
+    description: string,
+  ) => {
     await api.createCard(columnId, title, description);
     loadBoard();
   };
@@ -230,11 +234,7 @@ const KanbanBoard: React.FC = () => {
       const newIndex = destCol
         ? destCol.cards.findIndex((c) => c.id === activeId)
         : -1;
-      await api.moveCard(
-        activeId,
-        targetColId,
-        newIndex >= 0 ? newIndex : 0,
-      );
+      await api.moveCard(activeId, targetColId, newIndex >= 0 ? newIndex : 0);
     }
 
     // Reload to get consistent state from server

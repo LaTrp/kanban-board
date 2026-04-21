@@ -94,9 +94,7 @@ const KanbanColumn: React.FC<Props> = ({
       </div>
 
       {/* Cards */}
-      <div
-        className="flex-1 overflow-y-auto px-2.5 pb-2 space-y-1.5 kanban-scroll min-h-[80px]"
-      >
+      <div className="flex-1 overflow-y-auto px-2.5 pb-2 space-y-1.5 kanban-scroll min-h-[80px]">
         <SortableContext
           items={column.cards.map((c) => c.id)}
           strategy={verticalListSortingStrategy}
