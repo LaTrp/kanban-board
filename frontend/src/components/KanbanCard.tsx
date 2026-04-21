@@ -55,7 +55,7 @@ const KanbanCard: React.FC<Props> = ({ card, onDelete, onUpdate }) => {
     <div
       ref={setNodeRef}
       style={style}
-      className="bg-slate-700 rounded-lg p-3 shadow-md hover:shadow-lg transition-shadow cursor-grab active:cursor-grabbing group"
+      className="bg-slate-700 rounded-md p-2 shadow-sm hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing group"
       {...attributes}
       {...listeners}
     >

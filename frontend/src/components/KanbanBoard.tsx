@@ -268,9 +268,9 @@ const KanbanBoard: React.FC = () => {
   return (
     <div className="h-screen bg-slate-900 flex flex-col">
       {/* Header */}
-      <header className="bg-slate-800 border-b border-slate-700 px-6 py-4 flex items-center justify-between">
+      <header className="bg-slate-800 border-b border-slate-700 px-4 py-2.5 flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-white">{board.title}</h1>
+          <h1 className="text-base font-bold text-white">{board.title}</h1>
           <p className="text-xs text-slate-400 mt-0.5">
             {board.columns.reduce((acc, c) => acc + c.cards.length, 0)} cards
             across {board.columns.length} columns
@@ -279,7 +279,7 @@ const KanbanBoard: React.FC = () => {
       </header>
 
       {/* Board */}
-      <main className="flex-1 overflow-x-auto p-6 max-w-7xl mx-auto w-full">
+      <main className="flex-1 overflow-x-auto p-4 max-w-5xl mx-auto w-full">
         <DndContext
           sensors={sensors}
           collisionDetection={kanbanCollisionDetection}
@@ -287,7 +287,7 @@ const KanbanBoard: React.FC = () => {
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
         >
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 items-start h-full">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-3 items-start h-full">
             {board.columns.map((column) => (
               <KanbanColumn
                 key={column.id}
@@ -302,7 +302,7 @@ const KanbanBoard: React.FC = () => {
 
             {/* Add Column */}
             {addingColumn ? (
-              <div className="bg-slate-800 rounded-xl min-w-[220px] p-3 space-y-2">
+              <div className="bg-slate-800 rounded-lg min-w-[180px] p-2.5 space-y-2">
                 <input
                   autoFocus
                   value={newColumnTitle}
@@ -338,7 +338,7 @@ const KanbanBoard: React.FC = () => {
             ) : (
               <button
                 onClick={() => setAddingColumn(true)}
-                className="bg-slate-800/50 hover:bg-slate-800 border-2 border-dashed border-slate-700 hover:border-slate-600 rounded-xl min-w-[220px] p-4 text-slate-500 hover:text-slate-300 transition-colors text-sm font-medium"
+                className="bg-slate-800/50 hover:bg-slate-800 border-2 border-dashed border-slate-700 hover:border-slate-600 rounded-lg min-w-[180px] p-3 text-slate-500 hover:text-slate-300 transition-colors text-xs font-medium"
               >
                 + Add Column
               </button>
